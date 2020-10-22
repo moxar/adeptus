@@ -3,10 +3,9 @@ package main
 import (
 	"fmt"
 	"os"
+	"sort"
 	"strings"
 	"text/tabwriter"
-
-	"github.com/bradfitz/slice"
 )
 
 // Character is the type representing a role playing character
@@ -162,7 +161,7 @@ func (c *Character) Print() {
 		backgrounds = append(backgrounds, background)
 	}
 
-	slice.Sort(backgrounds, func(i, j int) bool {
+	sort.Slice(backgrounds, func(i, j int) bool {
 		if backgrounds[i].Type != backgrounds[j].Type {
 			return backgrounds[i].Type < backgrounds[j].Type
 		}
@@ -181,7 +180,7 @@ func (c *Character) Print() {
 		aptitudes = append(aptitudes, aptitude)
 	}
 
-	slice.Sort(aptitudes, func(i, j int) bool {
+	sort.Slice(aptitudes, func(i, j int) bool {
 		return aptitudes[i] < aptitudes[j]
 	})
 
@@ -198,14 +197,14 @@ func (c *Character) Print() {
 	var characteristicSum int
 	characteristics := []Characteristic{}
 	for _, characteristic := range c.Characteristics {
-        characteristicSum += characteristic.Value
+		characteristicSum += characteristic.Value
 		characteristics = append(characteristics, characteristic)
 	}
 
-	slice.Sort(characteristics, func(i, j int) bool {
+	sort.Slice(characteristics, func(i, j int) bool {
 		return characteristics[i].Name < characteristics[j].Name
 	})
-    
+
 	fmt.Printf("\n%s (%s)\n", theme.Title("Characteristics"), theme.Value(fmt.Sprintf("%d", characteristicSum)))
 
 	for _, characteristic := range characteristics {
@@ -223,7 +222,7 @@ func (c *Character) Print() {
 			gauges = append(gauges, gauge)
 		}
 
-		slice.Sort(gauges, func(i, j int) bool {
+		sort.Slice(gauges, func(i, j int) bool {
 			return gauges[i].Name < gauges[j].Name
 		})
 
@@ -244,7 +243,7 @@ func (c *Character) Print() {
 			skills = append(skills, skill)
 		}
 
-		slice.Sort(skills, func(i, j int) bool {
+		sort.Slice(skills, func(i, j int) bool {
 			return skills[i].FullName() < skills[j].FullName()
 		})
 
@@ -266,7 +265,7 @@ func (c *Character) Print() {
 			talents = append(talents, talent)
 		}
 
-		slice.Sort(talents, func(i, j int) bool {
+		sort.Slice(talents, func(i, j int) bool {
 			return talents[i].FullName() < talents[j].FullName()
 		})
 
@@ -293,7 +292,7 @@ func (c *Character) Print() {
 			spells = append(spells, spell)
 		}
 
-		slice.Sort(spells, func(i, j int) bool {
+		sort.Slice(spells, func(i, j int) bool {
 			return spells[i].Name < spells[j].Name
 		})
 
@@ -315,7 +314,7 @@ func (c *Character) Print() {
 			rules = append(rules, rule)
 		}
 
-		slice.Sort(rules, func(i, j int) bool {
+		sort.Slice(rules, func(i, j int) bool {
 			return rules[i].Name < rules[j].Name
 		})
 
@@ -419,7 +418,7 @@ func (c *Character) Suggest(universe Universe, max int, all bool, allowSpells bo
 	}
 
 	// Sort by cost then name.
-	slice.Sort(appliable, func(i, j int) bool {
+	sort.Slice(appliable, func(i, j int) bool {
 		ci, cj := *appliable[i].Cost, *appliable[j].Cost
 		if ci == cj {
 			return appliable[i].Name < appliable[j].Name

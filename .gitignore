@@ -1,7 +1,4 @@
 .vagrant
 *.txt
 adeptus-universes
-vendor/*
-!vendor/manifest
-pkg
-bin
+bin/*
